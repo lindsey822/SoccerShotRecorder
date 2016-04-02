@@ -1,5 +1,6 @@
 package edu.illinois.cs498.draganddroppractice;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Color;
@@ -19,9 +20,11 @@ import android.widget.Toast;
  */
 public class ImageAdapter extends BaseAdapter {
     private Context context;
+    private View.OnDragListener onDraglistener;
 
-    public ImageAdapter(Context c) {
+    public ImageAdapter(Context c, View.OnDragListener listener) {
         context = c;
+        this.onDraglistener = listener;
     }
     public int getCount() {
         return 209;
@@ -42,7 +45,7 @@ public class ImageAdapter extends BaseAdapter {
                 ? LayoutInflater.from(context).inflate(R.layout.grid, parent, false)
                 : convertView);
         curr_grid.setId(position);
-        curr_grid.setOnDragListener(new FieldOnDragListener(Boolean.FALSE));
+        curr_grid.setOnDragListener(onDraglistener);
         return curr_grid;
     }
 }

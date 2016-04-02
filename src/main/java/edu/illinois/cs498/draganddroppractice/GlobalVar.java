@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class GlobalVar {
 
-    private final List dot_layouts = new ArrayList<Integer>()
+    public static final List dot_layouts = new ArrayList<Integer>()
     {{
             add(R.drawable.dot_goal);//(default)goal - blue
             add(R.drawable.dot_near_miss);//near miss - deep purple
@@ -17,7 +17,7 @@ public class GlobalVar {
             add(R.drawable.dot_penalty_kick);//penalty kick - pink
         }};
 
-    private final List dot_descriptions = new ArrayList<String>()
+    public static final List dot_descriptions = new ArrayList<String>()
     {{
             add("GOAL");
             add("NEAR MISS");
@@ -26,6 +26,9 @@ public class GlobalVar {
             add("PENALTY KICK");
         }};
 
+    public static final int FIRST_HALF = 0;
+    public static final int SECOND_HALF = 1;
+    /*
     public List getDotLayouts() {
         return dot_layouts;
     }
@@ -54,5 +57,5 @@ public class GlobalVar {
     public static GlobalVar getInstance() {
         return GlobalVar.instance;
     }
-
+*/
 }
