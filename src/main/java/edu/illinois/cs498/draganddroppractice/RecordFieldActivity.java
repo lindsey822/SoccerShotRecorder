@@ -148,7 +148,7 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
 
     //when recording ends, trigger a pop-up dialog to let the user enter final scores
     //call this method after that dialog is completed
-    public void onGoToSummary() {
+    public void onGoToGameSummary() {
         //capture a bitmap and thumbnail of current field view for second half
         bmap_second = captureBitmap();
         thumbnail_second = getThumbnailFromBitmap(bmap_first);

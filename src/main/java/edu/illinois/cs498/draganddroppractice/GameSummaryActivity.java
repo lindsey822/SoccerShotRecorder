@@ -6,7 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class GameSummaryActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.summary_report_view);
+        setContentView(R.layout.game_summary_view);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Intent intent = getIntent();
@@ -79,5 +79,18 @@ public class GameSummaryActivity extends Activity {
         findViewById(R.id.field_thumbnail_first).setBackground(new BitmapDrawable(getResources(), thumbnail_first));
         //findViewById(R.id.field_thumbnail_second).setBackground(new BitmapDrawable(getResources(), thumbnail_second));
 
+        (findViewById(R.id.field_thumbnail_first)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onGoToFieldSummary();
+            }
+        });
+
+    }
+
+    public void onGoToFieldSummary() {
+        Intent intent = new Intent(this, FieldSummaryActivity.class);
+        //intent.putExtra("image", bmap_first);
+        startActivity(intent);
     }
 }
