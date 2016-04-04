@@ -1,27 +1,34 @@
 package edu.illinois.cs498.draganddroppractice;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Lindsey Liu on 16-04-02.
+ * Author: Lindsey Liu
+ * Date: 16-04-02
  */
 public class GameSummaryActivity extends Activity {
     List<String> dot_descriptions = GlobalConst.dot_descriptions;
     int num_types = GlobalConst.num_types;
 
     Boolean from_curr_game;
-    HashMap<Integer, HashMap<Integer, Integer>> shots;
+//    HashMap<Integer, HashMap<Integer, Integer>> shots;
     HashMap<Integer, HashMap<Integer, Integer>> counts;
 
     String my_team_name;
@@ -30,14 +37,10 @@ public class GameSummaryActivity extends Activity {
     String my_team_score;
     String opp_team_score;
 
-    //bitmap of field view for first half
+    String bmap_first_filename;
+    String bmap_second_filename;
     Bitmap bmap_first;
-    //bitmap of field view for second half
     Bitmap bmap_second;
-    //thumbnail of field view for first half
-    Bitmap thumbnail_first;
-    //thumbnail of field view for second half
-    Bitmap thumbnail_second;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,44 +56,49 @@ public class GameSummaryActivity extends Activity {
         my_team_score = bundle.getString("my_team_score");
         opp_team_score = bundle.getString("opp_team_score");
 
-        shots = (HashMap<Integer, HashMap<Integer, Integer>>)bundle.getSerializable("shots");
         counts = (HashMap<Integer, HashMap<Integer, Integer>>)bundle.getSerializable("counts");
 
+        //will use this flag later after we have main activity
         from_curr_game = bundle.getBoolean("from_curr_game");
 
-        bmap_first = bundle.getParcelable("field_bitmap_first");
-        bmap_second = bundle.getParcelable("field_bitmap_second");
-        thumbnail_first = bundle.getParcelable("field_thumbnail_first");
-        thumbnail_second = bundle.getParcelable("field_thumbnail_first");
+        bmap_first_filename = bundle.getString("field_bitmap_first_filename");
+        bmap_second_filename = bundle.getString("field_bitmap_second_filename");
+        Context context = getApplicationContext();
+        bmap_first = GlobalHelper.readBitmapFile(context, bmap_first_filename);
+        bmap_second = GlobalHelper.readBitmapFile(context, bmap_second_filename);
 
         ((TextView)findViewById(R.id.my_team_name)).setText(my_team_name);
         ((TextView)findViewById(R.id.opp_team_name)).setText(opp_team_name);
         ((TextView)findViewById(R.id.my_team_score)).setText(my_team_score);
         ((TextView)findViewById(R.id.opp_team_score)).setText(opp_team_score);
 
-        ((TextView)findViewById(R.id.goals1)).setText(counts.get(0).get(0));
-        ((TextView)findViewById(R.id.misses1)).setText(counts.get(0).get(1));
-        ((TextView)findViewById(R.id.penalty_kicks1)).setText(counts.get(0).get(2));
-        ((TextView)findViewById(R.id.red_cards1)).setText(counts.get(0).get(3));
-        ((TextView)findViewById(R.id.yellow_cardss1)).setText(counts.get(0).get(4));
-        /*
-        ((TextView)findViewById(R.id.goals1)).setText(counts.get(1).get(0));
-        ((TextView)findViewById(R.id.goals1)).setText(counts.get(1).get(1));
-        ((TextView)findViewById(R.id.goals1)).setText(counts.get(1).get(2));
-        ((TextView)findViewById(R.id.goals1)).setText(counts.get(1).get(3));
-        ((TextView)findViewById(R.id.goals1)).setText(counts.get(1).get(4));
+        ((TextView)findViewById(R.id.goals0)).setText("Goal " + Integer.toString(counts.get(0).get(0)));
+        ((TextView)findViewById(R.id.misses0)).setText("Miss " + Integer.toString(counts.get(0).get(1)));
+        ((TextView)findViewById(R.id.penalty_kicks0)).setText("Penalty Kick " + Integer.toString(counts.get(0).get(2)));
+        ((TextView)findViewById(R.id.red_cards0)).setText("Red Card " + Integer.toString(counts.get(0).get(3)));
+        ((TextView)findViewById(R.id.yellow_cards0)).setText("Yellow Card " + Integer.toString(counts.get(0).get(4)));
 
-        ((TextView)findViewById(R.id.player_text)).setText(player_name + "'S PERFORMANCE");
-        * */
+        ((TextView)findViewById(R.id.goals1)).setText("Goal " + Integer.toString(counts.get(1).get(0)));
+        ((TextView)findViewById(R.id.misses1)).setText("Miss " + Integer.toString(counts.get(1).get(1)));
+        ((TextView)findViewById(R.id.penalty_kicks1)).setText("Penalty Kick " + Integer.toString(counts.get(1).get(2)));
+        ((TextView)findViewById(R.id.red_cards1)).setText("Red Card " + Integer.toString(counts.get(1).get(3)));
+        ((TextView)findViewById(R.id.yellow_cards1)).setText("Yellow Card " + Integer.toString(counts.get(1).get(4)));
 
+        ((TextView)findViewById(R.id.player_text)).setText(player_name.toUpperCase() + "'S PERFORMANCE");
 
-        findViewById(R.id.field_thumbnail_first).setBackground(new BitmapDrawable(getResources(), thumbnail_first));
-        //findViewById(R.id.field_thumbnail_second).setBackground(new BitmapDrawable(getResources(), thumbnail_second));
-
+        if (bmap_first != null) ((ImageButton)findViewById(R.id.field_thumbnail_first)).setImageDrawable(new BitmapDrawable(getResources(), bmap_first));
         (findViewById(R.id.field_thumbnail_first)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onGoToFieldSummaryActivity();
+                onGoToFieldSummaryActivity(0);
+            }
+        });
+
+        if (bmap_second != null) ((ImageButton)findViewById(R.id.field_thumbnail_second)).setImageDrawable(new BitmapDrawable(getResources(), bmap_second));
+        (findViewById(R.id.field_thumbnail_second)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onGoToFieldSummaryActivity(1);
             }
         });
 
@@ -107,14 +115,21 @@ public class GameSummaryActivity extends Activity {
                 String subject = "Check out my newest soccer game record!";
                 StringBuffer bodyBuffer = new StringBuffer("");
                 bodyBuffer.append(my_team_name + " " + my_team_score
-                        + " : " + opp_team_score + " " + opp_team_name + "\n");
-                bodyBuffer.append(player_name + "'s performance for first half:\n");
+                        + " : " + opp_team_score + " " + opp_team_name);
+                bodyBuffer.append("\n");
+                bodyBuffer.append("\n");
+
+                bodyBuffer.append("-" + player_name + "'s performance for first half:");
+                bodyBuffer.append("\n");
                 for (int i=0;i<num_types;i++) {
                     bodyBuffer.append(dot_descriptions.get(i) + " " + counts.get(0).get(i));
+                    bodyBuffer.append("\n");
                 }
-                bodyBuffer.append(player_name + "'s performance for second half:\n");
+                bodyBuffer.append("\n");
+                bodyBuffer.append("-" + player_name + "'s performance for second half:\n");
                 for (int i=0;i<num_types;i++) {
                     bodyBuffer.append(dot_descriptions.get(i) + " " + counts.get(1).get(i));
+                    bodyBuffer.append("\n");
                 }
                 shareViaEmail(subject, bodyBuffer.toString());
             }
@@ -126,9 +141,15 @@ public class GameSummaryActivity extends Activity {
         startActivity(intent);
     }
 
-    public void onGoToFieldSummaryActivity() {
+    public void onGoToFieldSummaryActivity(int half_flag) {
         Intent intent = new Intent(this, FieldSummaryActivity.class);
-        //intent.putExtra("image", bmap_first);
+        switch (half_flag) {
+            case 0:
+                intent.putExtra("image_filename", bmap_first_filename);
+
+            case 1:
+                intent.putExtra("image_filename", bmap_second_filename);
+        }
         startActivity(intent);
     }
 

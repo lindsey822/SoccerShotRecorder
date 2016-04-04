@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Created by Lindsey Liu on 16-03-29.
+ * Author: Lindsey Liu
+ * Date: 16-03-29
  */
 public class MainActivity extends Activity {
 

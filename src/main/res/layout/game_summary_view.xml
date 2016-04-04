@@ -1,8 +1,11 @@
+<!--
+    Author: Lindsey Liu
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_vertical_margin">
 
     <TextView
         android:layout_width="match_parent"
@@ -10,184 +13,251 @@
         android:text="GAME SUMMARY"
         style="@android:style/TextAppearance.Large"/>
 
-    <ScrollView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/my_team_name"
+                android:text="my team"
+                style="@android:style/TextAppearance.Medium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:layout_gravity="center"
+                style="@android:style/TextAppearance.Medium"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/opp_team_name"
+                android:text="opponent"
+                style="@android:style/TextAppearance.Medium"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/my_team_score"
+                android:text="0"
+                style="@android:style/TextAppearance.Medium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:layout_gravity="center"
+                style="@android:style/TextAppearance.Medium"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/opp_team_score"
+                android:text="0"
+                style="@android:style/TextAppearance.Medium"/>
+
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/player_text"
+        android:text="ERIC'S PERFORMANCE"
+        style="@android:style/TextAppearance.Large"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="50"
         android:fillViewport="true">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal"
-                android:padding="@dimen/activity_horizontal_margin">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/my_team_name"
-                    android:text="my team"
-                    style="@android:style/TextAppearance.Medium"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=":"
-                    android:layout_gravity="center"
-                    style="@android:style/TextAppearance.Medium"/>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/opp_team_name"
-                    android:text="opponent"
-                    style="@android:style/TextAppearance.Medium"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal"
-                android:padding="@dimen/activity_horizontal_margin">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/my_team_score"
-                    android:text="0"
-                    style="@android:style/TextAppearance.Medium"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=":"
-                    android:layout_gravity="center"
-                    style="@android:style/TextAppearance.Medium"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/opp_team_score"
-                    android:text="0"
-                    style="@android:style/TextAppearance.Medium"/>
-
-            </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="left"
+            android:padding="@dimen/activity_vertical_margin">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/player_text"
-                android:text="ERIC'S PERFORMANCE"
+                android:text="FIRST HALF"
                 style="@android:style/TextAppearance.Large"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="left"
-                android:padding="@dimen/activity_vertical_margin">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="FIRST HALF"
-                    style="@android:style/TextAppearance.Large"/>
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:layout_weight="5">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="5">
+                        android:id="@+id/goals0"
+                        android:text="goals 0"
+                        style="@android:style/TextAppearance.Medium"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/goals1"
-                            android:text="goals 0"
-                            style="@android:style/TextAppearance.Medium"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/misses0"
+                        android:text="misses 0"
+                        android:paddingTop="10dp"
+                        style="@android:style/TextAppearance.Medium"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/misses1"
-                            android:text="misses 0"
-                            android:paddingTop="10dp"
-                            style="@android:style/TextAppearance.Medium"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/penalty_kicks0"
+                        android:text="penalty kicks 0"
+                        android:paddingTop="10dp"
+                        style="@android:style/TextAppearance.Medium"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/penalty_kicks1"
-                            android:text="penalty kicks 0"
-                            android:paddingTop="10dp"
-                            style="@android:style/TextAppearance.Medium"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/red_cards0"
+                        android:text="red cards 0"
+                        android:paddingTop="10dp"
+                        style="@android:style/TextAppearance.Medium"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/red_cards1"
-                            android:text="red cards 0"
-                            android:paddingTop="10dp"
-                            style="@android:style/TextAppearance.Medium"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/yellow_cards0"
+                        android:text="yellow cards 0"
+                        android:paddingTop="10dp"
+                        style="@android:style/TextAppearance.Medium"/>
+                </LinearLayout>
+                <ImageButton
+                    android:id="@+id/field_thumbnail_first"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/field"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SECOND HALF"
+                style="@android:style/TextAppearance.Large"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/yellow_cardss1"
-                            android:text="yellow cards 0"
-                            android:paddingTop="10dp"
-                            style="@android:style/TextAppearance.Medium"/>
-                    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/field_thumbnail_first"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="5"
-                        android:src="@drawable/field"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="5">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/goals1"
+                        android:text="goals 0"
+                        style="@android:style/TextAppearance.Medium"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/misses1"
+                        android:text="misses 0"
+                        android:paddingTop="10dp"
+                        style="@android:style/TextAppearance.Medium"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/penalty_kicks1"
+                        android:text="penalty kicks 0"
+                        android:paddingTop="10dp"
+                        style="@android:style/TextAppearance.Medium"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/red_cards1"
+                        android:text="red cards 0"
+                        android:paddingTop="10dp"
+                        style="@android:style/TextAppearance.Medium"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/yellow_cards1"
+                        android:text="yellow cards 0"
+                        android:paddingTop="10dp"
+                        style="@android:style/TextAppearance.Medium"/>
                 </LinearLayout>
 
-
+                <ImageButton
+                    android:id="@+id/field_thumbnail_second"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/field"/>
             </LinearLayout>
-        </LinearLayout>
 
+
+        </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal|bottom">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:id="@+id/main_menu_btn"
-            android:text="MAIN MENU"/>
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:paddingTop="10dp"
+    android:orientation="horizontal"
+android:layout_gravity="center_horizontal|bottom">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:id="@+id/share_btn"
-            android:text="SHARE"/>
-    </LinearLayout>
+<Button
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="5"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:id="@+id/main_menu_btn"
+    android:text="MAIN MENU"/>
+
+<Button
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="5"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:id="@+id/share_btn"
+    android:text="SHARE"/>
 </LinearLayout>
+    </LinearLayout>

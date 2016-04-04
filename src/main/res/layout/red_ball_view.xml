@@ -1,3 +1,6 @@
+<!--
+    Author: Lindsey Liu
+-->
 <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/red_ball"
     android:layout_width="match_parent"

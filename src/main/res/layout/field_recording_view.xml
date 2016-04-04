@@ -1,0 +1,144 @@
+<!--
+    Author: Neha Sharma
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="15">
+
+        <TextView
+            android:id="@+id/my_team_name"
+            android:layout_weight="0.15"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/my_team_name"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingLeft="10dip"/>
+
+        <ImageButton
+            android:layout_width="18dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:src="@drawable/ic_add_black_18dp"
+            android:scaleType="centerCrop"
+            android:gravity="center_horizontal"
+            android:id="@+id/my_team_score_inc"
+            android:paddingTop="16dip" />
+
+        <TextView
+            android:id="@+id/my_team_score"
+            android:layout_weight="0.05"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/zero"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <ImageButton
+            android:layout_width="18dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:src="@drawable/ic_remove_black_18dp"
+            android:scaleType="centerCrop"
+            android:gravity="center_horizontal"
+            android:id="@+id/my_team_score_dec"
+            android:paddingTop="16dip" />
+
+        <TextView
+            android:layout_weight="0.05"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text=":"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <ImageButton
+            android:layout_width="18dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:src="@drawable/ic_add_black_18dp"
+            android:scaleType="centerCrop"
+            android:gravity="center_horizontal"
+            android:id="@+id/opp_team_score_inc"
+            android:paddingTop="16dip" />
+
+        <TextView
+            android:id="@+id/opp_team_score"
+            android:layout_weight="0.05"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/zero"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <ImageButton
+            android:layout_width="18dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:src="@drawable/ic_remove_black_18dp"
+            android:scaleType="centerCrop"
+            android:gravity="center_horizontal"
+            android:id="@+id/opp_team_score_dec"
+            android:paddingTop="16dip" />
+
+        <TextView
+            android:id="@+id/opp_team_name"
+            android:layout_weight="0.15"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/opp_team_name"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingRight="10dip"/>
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:id="@+id/half_spinner"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="@color/blackColor" />
+
+        <ImageButton
+            android:layout_width="18dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:src="@drawable/ic_stop_black_18dp"
+            android:scaleType="centerCrop"
+            android:gravity="center_horizontal"
+            android:id="@+id/stop_btn"
+            android:paddingTop="16dip" />
+
+    </LinearLayout>
+    <!--
+        Author(FrameLayout): Lindsey Liu
+    -->
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="85">
+
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/field"
+            android:columnWidth="30dp"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            />
+
+        <ImageView
+            android:id="@+id/trash_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/trash_can"
+            android:layout_gravity="center_horizontal|bottom" />
+    </FrameLayout>
+
+</LinearLayout>

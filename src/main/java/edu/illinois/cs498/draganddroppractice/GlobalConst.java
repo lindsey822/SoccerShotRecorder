@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Lindsey Liu on 16-03-30.
+ * Author: Lindsey Liu
+ * Date: 16-03-30
  */
 public class GlobalConst {
 

@@ -15,16 +15,30 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
- * Created by Lindsey Liu on 16-03-29.
+ * Author: Lindsey Liu
+ * Date: 16-03-29
  */
 public class ImageAdapter extends BaseAdapter {
     private Context context;
     private View.OnDragListener onDraglistener;
 
-    public ImageAdapter(Context c, View.OnDragListener listener) {
+    public void setExistingShots(HashMap<Integer, Integer> existing_shots) {
+        this.existing_shots = existing_shots;
+    }
+
+    private HashMap<Integer, Integer> existing_shots;
+
+    List<Integer> dot_layouts = GlobalConst.dot_layouts;
+
+    public ImageAdapter(Context c, View.OnDragListener listener,
+                        HashMap<Integer, Integer> existing_shots) {
         context = c;
         this.onDraglistener = listener;
+        this.existing_shots = existing_shots;
     }
     public int getCount() {
         return 209;
@@ -41,11 +55,17 @@ public class ImageAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         //get the item corresponding to your position
 
-        ImageView curr_grid = (ImageView)(convertView == null
-                ? LayoutInflater.from(context).inflate(R.layout.grid, parent, false)
-                : convertView);
+        ImageView curr_grid = (ImageView)LayoutInflater.from(context).inflate(R.layout.grid, parent, false);
         curr_grid.setId(position);
         curr_grid.setOnDragListener(onDraglistener);
+        if (!existing_shots.isEmpty()) {
+            if (existing_shots.containsKey(position)) {
+                Log.d("redraw a dot",
+                        "position="+position+" layout index="+existing_shots.get(position));
+                curr_grid.setImageResource(existing_shots.get(position));
+            }
+        }
+
         return curr_grid;
     }
 }
