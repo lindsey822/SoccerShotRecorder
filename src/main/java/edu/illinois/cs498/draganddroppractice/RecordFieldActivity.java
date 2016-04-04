@@ -1,6 +1,7 @@
 package edu.illinois.cs498.draganddroppractice;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -17,7 +18,12 @@ import android.app.Activity;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,11 +35,13 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
 
     List<Integer> dot_layouts = GlobalConst.dot_layouts;
     List<String> dot_descriptions = GlobalConst.dot_descriptions;
+    int num_types = GlobalConst.num_types;
 
     //global info for current game, coming from the previous activity
     String my_team_name;
     String opp_team_name;
-    //information entered by the user when recording is over
+    String player_name;
+    //information entered by the user while recording
     String my_team_score;
     String opp_team_score;
 
@@ -64,6 +72,7 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
         Bundle bundle = intent.getExtras();
         my_team_name = bundle.getString("my_team_name");
         opp_team_name = bundle.getString("opp_team_name");
+        player_name = bundle.getString("player_name");
 
         shots = new HashMap<>();
         shots.put(0, new HashMap<Integer, Integer>());
@@ -87,7 +96,7 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
                 ImageView curr_grid = (ImageView) v;
                 int color_index = Integer.parseInt((String) curr_grid.getTag());
                 int next_color_index = color_index + 1;
-                if (next_color_index == 5) {
+                if (next_color_index == num_types) {
                     next_color_index = 0;
                 }
                 curr_grid.setImageResource(dot_layouts.get(next_color_index));
@@ -132,7 +141,24 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
         });
 
     }
+/*
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("shots", shots);
+        outState.putSerializable("shots", shot_type_counter);
+        outState.putInt("half_flag", half_flag);
+        //the following could be null
+        outState.putParcelable("field_bitmap_first", bmap_first);
+        outState.putParcelable("field_thumbnail_first", thumbnail_first);
+    }
 
+    private void restore(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            places = (ArrayList<HashMap<String,String>>) savedInstanceState.getSerializable("places");
+        }
+    }
+*/
     public void onGoToSecondHalf() {
         //capture a bitmap and thumbnail of current field view for first half
         bmap_first = captureBitmap();
@@ -143,12 +169,18 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
 
         //clear all shots
         gridview.invalidateViews();
+
+        //save shots map to file
+        saveShotsToFile();
     }
 
 
     //when recording ends, trigger a pop-up dialog to let the user enter final scores
     //call this method after that dialog is completed
     public void onGoToGameSummary() {
+        //save shots map to file
+        saveShotsToFile();
+
         //capture a bitmap and thumbnail of current field view for second half
         bmap_second = captureBitmap();
         thumbnail_second = getThumbnailFromBitmap(bmap_first);
@@ -158,6 +190,7 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
 
         extras.putString("my_team_name", my_team_name);
         extras.putString("opp_team_name", opp_team_name);
+        extras.putString("player_name", player_name);
         extras.putString("my_team_score", my_team_score);
         extras.putString("opp_team_score", opp_team_score);
 
@@ -231,10 +264,30 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
     }
 
     //helper functions
+
+    public void saveShotsToFile() {
+        Calendar cal = Calendar.getInstance();
+        String date = Integer.toString(cal.get(Calendar.YEAR))
+                + Integer.toString(cal.get(Calendar.MONTH))
+                + Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
+        try
+        {
+            Context context = getApplicationContext();
+            FileOutputStream fos = context.openFileOutput(
+                    "shots_half_" + half_flag + date + ".map", Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(shots.get(1));
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     //capture bitmap of current view
     public Bitmap captureBitmap() {
         View curr_view = this.findViewById(android.R.id.content);
-        Bitmap b = Bitmap.createBitmap( curr_view.getLayoutParams().width, curr_view.getLayoutParams().height, Bitmap.Config.ARGB_8888);
+        Bitmap b = Bitmap.createBitmap(curr_view.getLayoutParams().width
+                , curr_view.getLayoutParams().height
+                , Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
         curr_view.layout(curr_view.getLeft(), curr_view.getTop(), curr_view.getRight(), curr_view.getBottom());
         curr_view.draw(c);

@@ -5,16 +5,20 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Lindsey Liu on 16-04-02.
  */
 public class GameSummaryActivity extends Activity {
+    List<String> dot_descriptions = GlobalConst.dot_descriptions;
+    int num_types = GlobalConst.num_types;
 
     Boolean from_curr_game;
     HashMap<Integer, HashMap<Integer, Integer>> shots;
@@ -22,6 +26,7 @@ public class GameSummaryActivity extends Activity {
 
     String my_team_name;
     String opp_team_name;
+    String player_name;
     String my_team_score;
     String opp_team_score;
 
@@ -44,6 +49,7 @@ public class GameSummaryActivity extends Activity {
 
         my_team_name = bundle.getString("my_team_name");
         opp_team_name = bundle.getString("opp_team_name");
+        player_name = bundle.getString("player_name");
         my_team_score = bundle.getString("my_team_score");
         opp_team_score = bundle.getString("opp_team_score");
 
@@ -73,6 +79,8 @@ public class GameSummaryActivity extends Activity {
         ((TextView)findViewById(R.id.goals1)).setText(counts.get(1).get(2));
         ((TextView)findViewById(R.id.goals1)).setText(counts.get(1).get(3));
         ((TextView)findViewById(R.id.goals1)).setText(counts.get(1).get(4));
+
+        ((TextView)findViewById(R.id.player_text)).setText(player_name + "'S PERFORMANCE");
         * */
 
 
@@ -82,15 +90,55 @@ public class GameSummaryActivity extends Activity {
         (findViewById(R.id.field_thumbnail_first)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onGoToFieldSummary();
+                onGoToFieldSummaryActivity();
             }
         });
 
+        //add onclick listeners to the two buttons
+        findViewById(R.id.main_menu_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onGoToMainActivity();
+            }
+        });
+        findViewById(R.id.share_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String subject = "Check out my newest soccer game record!";
+                StringBuffer bodyBuffer = new StringBuffer("");
+                bodyBuffer.append(my_team_name + " " + my_team_score
+                        + " : " + opp_team_score + " " + opp_team_name + "\n");
+                bodyBuffer.append(player_name + "'s performance for first half:\n");
+                for (int i=0;i<num_types;i++) {
+                    bodyBuffer.append(dot_descriptions.get(i) + " " + counts.get(0).get(i));
+                }
+                bodyBuffer.append(player_name + "'s performance for second half:\n");
+                for (int i=0;i<num_types;i++) {
+                    bodyBuffer.append(dot_descriptions.get(i) + " " + counts.get(1).get(i));
+                }
+                shareViaEmail(subject, bodyBuffer.toString());
+            }
+        });
     }
 
-    public void onGoToFieldSummary() {
+    private void onGoToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void onGoToFieldSummaryActivity() {
         Intent intent = new Intent(this, FieldSummaryActivity.class);
         //intent.putExtra("image", bmap_first);
         startActivity(intent);
+    }
+
+    public void shareViaEmail(String subject, String body) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, body);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }

@@ -26,6 +26,8 @@ public class GlobalConst {
             add("PENALTY KICK");
         }};
 
+    public static final int num_types = 5;
+
     public static final int FIRST_HALF = 0;
     public static final int SECOND_HALF = 1;
     /*
