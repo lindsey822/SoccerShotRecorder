@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context="com.example.kevin.sportsrecorder.MainActivity"
+    android:orientation="horizontal"
+    android:background="@color/colorPrimary">
+
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.7">
+
+        <!-- This is the part that's 70% of the total width. I'm inserting a LinearLayout and buttons.-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:paddingLeft="50sp"
+            android:paddingRight="50sp">
+
+            <TextView
+                android:text="Please enter player name:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="40dip"
+                android:textStyle="bold"
+                android:textSize="23dip"
+                android:textColor="@color/white">
+            </TextView>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/firstname"
+                android:singleLine="true"
+                android:padding="@dimen/activity_horizontal_margin">
+            </EditText>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONTINUE"
+                android:id="@+id/continue_Button"
+                android:layout_gravity="center_horizontal"
+                android:onClick="sendMessage"
+                android:padding="20dip"
+                android:layout_margin="20dip"
+                android:background="@color/team"
+                android:textColor="@color/blackColor"/>
+
+        </LinearLayout>
+
+        <!-- 70% Width End-->
+
+    </RelativeLayout>
+
+</LinearLayout>

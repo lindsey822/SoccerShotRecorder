@@ -1,64 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical">
-
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:padding="10dp"
-    android:text="Drag-N-Drop Demo"
-    android:textSize="20sp" />
-
-<LinearLayout
-    android:id="@+id/top_container"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
-    android:layout_weight=".5"
-    android:background="#000000"
-    android:gravity="center"
-    android:orientation="horizontal">
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context="com.example.kevin.sportsrecorder.MainActivity"
+    android:orientation="horizontal"
+    android:background="@color/colorPrimary">
 
-    <ImageView
-        android:id="@+id/red_ball"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:src="@drawable/dot_goal" />
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.15">
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.7">
+
+        <!-- This is the part that's 70% of the total width. I'm inserting a LinearLayout and buttons.-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="100dip"
+                android:layout_height="100dip"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:src="@drawable/app_icon"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
+
+            <Button
+                android:text="PLAYER"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/playerButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:textColor="@color/team"
+                android:textSize="20dip"
+                android:layout_margin="16dip" />
+
+            <Button
+                android:text="NEW GAME"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/newGameButton"
+                android:textSize="30dip"
+                android:background="@color/team"
+                android:padding="25dip"
+                android:textColor="@color/blackColor" />
+
+        </LinearLayout>
+        <!-- 70% Width End-->
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.15">
+    </RelativeLayout>
 
 </LinearLayout>
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="20dp"
-    android:layout_weight=".5"
-    android:background="#000000"
-    android:gravity="center"
-    android:orientation="horizontal" >
-    <LinearLayout
-        android:id="@+id/bottom_container1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp"
-        android:layout_weight=".5"
-        android:background="#000000"
-        android:gravity="center"
-        android:orientation="horizontal" />
-
-    <LinearLayout
-        android:id="@+id/bottom_container2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp"
-        android:layout_weight=".5"
-        android:background="#000000"
-        android:gravity="center"
-        android:orientation="horizontal" />
-
-</LinearLayout>
-
-</LinearLayout>
-

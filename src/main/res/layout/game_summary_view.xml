@@ -5,38 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/activity_vertical_margin">
+    android:padding="@dimen/activity_vertical_margin"
+    android:background="@color/colorPrimary">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="GAME SUMMARY"
-        style="@android:style/TextAppearance.Large"/>
+        android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:textSize="24dip" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="16dip">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            android:padding="@dimen/activity_horizontal_margin">
+            android:gravity="center_horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/my_team_name"
-                android:text="my team"
-                style="@android:style/TextAppearance.Medium"/>
+                style="@android:style/TextAppearance.Medium"
+                android:textColor="@color/team"
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=":"
                 android:layout_gravity="center"
+                android:text=" : "
                 style="@android:style/TextAppearance.Medium"/>
 
 
@@ -44,8 +49,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/opp_team_name"
-                android:text="opponent"
-                style="@android:style/TextAppearance.Medium"/>
+                style="@android:style/TextAppearance.Medium"
+                android:textColor="@color/team"/>
 
         </LinearLayout>
 
@@ -53,38 +58,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            android:padding="@dimen/activity_horizontal_margin">
+            android:gravity="center_horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/my_team_score"
                 android:text="0"
-                style="@android:style/TextAppearance.Medium"/>
+                android:textColor="@color/team"
+                android:textStyle="bold"
+                style="@android:style/TextAppearance.Large"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=":"
                 android:layout_gravity="center"
-                style="@android:style/TextAppearance.Medium"/>
+                android:textColor="@color/team"
+                style="@android:style/TextAppearance.Large"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/opp_team_score"
                 android:text="0"
-                style="@android:style/TextAppearance.Medium"/>
+                android:textColor="@color/team"
+                style="@android:style/TextAppearance.Large"/>
 
         </LinearLayout>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:id="@+id/player_text"
         android:text="ERIC'S PERFORMANCE"
-        style="@android:style/TextAppearance.Large"/>
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:textSize="20dip"
+        android:paddingTop="24dip"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -95,14 +108,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="left"
-            android:padding="@dimen/activity_vertical_margin">
+            android:gravity="left">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="FIRST HALF"
-                style="@android:style/TextAppearance.Large"/>
+                style="@android:style/TextAppearance.Medium"
+                android:textStyle="bold"
+                android:textColor="@color/second_title"
+                android:paddingTop="16dip"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -120,14 +135,17 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/goals0"
                         android:text="goals 0"
-                        style="@android:style/TextAppearance.Medium"/>
+                        android:textColor="@color/white"
+                        android:paddingTop="8dip"
+                        style="@android:style/TextAppearance.Medium" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/misses0"
                         android:text="misses 0"
-                        android:paddingTop="10dp"
+                        android:textColor="@color/white"
+                        android:paddingTop="10dip"
                         style="@android:style/TextAppearance.Medium"/>
 
                     <TextView
@@ -135,7 +153,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/penalty_kicks0"
                         android:text="penalty kicks 0"
-                        android:paddingTop="10dp"
+                        android:textColor="@color/white"
+                        android:paddingTop="10dip"
                         style="@android:style/TextAppearance.Medium"/>
 
                     <TextView
@@ -143,7 +162,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/red_cards0"
                         android:text="red cards 0"
-                        android:paddingTop="10dp"
+                        android:textColor="@color/white"
+                        android:paddingTop="10dip"
                         style="@android:style/TextAppearance.Medium"/>
 
                     <TextView
@@ -151,9 +171,12 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/yellow_cards0"
                         android:text="yellow cards 0"
-                        android:paddingTop="10dp"
+                        android:textColor="@color/white"
+                        android:paddingTop="10dip"
+                        android:paddingBottom="10dip"
                         style="@android:style/TextAppearance.Medium"/>
                 </LinearLayout>
+
                 <ImageButton
                     android:id="@+id/field_thumbnail_first"
                     android:layout_width="0dp"
@@ -162,12 +185,17 @@
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
                     android:src="@drawable/field"/>
+
             </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SECOND HALF"
-                style="@android:style/TextAppearance.Large"/>
+                android:textColor="@color/second_title"
+                android:textStyle="bold"
+                android:paddingTop="16dip"
+                style="@android:style/TextAppearance.Medium"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -185,6 +213,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/goals1"
                         android:text="goals 0"
+                        android:textColor="@color/white"
+                        android:paddingTop="8dip"
                         style="@android:style/TextAppearance.Medium"/>
 
                     <TextView
@@ -192,7 +222,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/misses1"
                         android:text="misses 0"
-                        android:paddingTop="10dp"
+                        android:textColor="@color/white"
+                        android:paddingTop="10dip"
                         style="@android:style/TextAppearance.Medium"/>
 
                     <TextView
@@ -200,7 +231,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/penalty_kicks1"
                         android:text="penalty kicks 0"
-                        android:paddingTop="10dp"
+                        android:textColor="@color/white"
+                        android:paddingTop="10dip"
                         style="@android:style/TextAppearance.Medium"/>
 
                     <TextView
@@ -208,7 +240,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/red_cards1"
                         android:text="red cards 0"
-                        android:paddingTop="10dp"
+                        android:textColor="@color/white"
+                        android:paddingTop="10dip"
                         style="@android:style/TextAppearance.Medium"/>
 
                     <TextView
@@ -216,7 +249,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/yellow_cards1"
                         android:text="yellow cards 0"
-                        android:paddingTop="10dp"
+                        android:textColor="@color/white"
+                        android:paddingTop="10dip"
                         style="@android:style/TextAppearance.Medium"/>
                 </LinearLayout>
 
@@ -235,29 +269,29 @@
     </ScrollView>
 
 
-<LinearLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:paddingTop="10dp"
-    android:orientation="horizontal"
-android:layout_gravity="center_horizontal|bottom">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal|bottom">
 
-<Button
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="5"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:id="@+id/main_menu_btn"
-    android:text="MAIN MENU"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:id="@+id/main_menu_btn"
+            android:text="MAIN MENU"/>
 
-<Button
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="5"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:id="@+id/share_btn"
-    android:text="SHARE"/>
-</LinearLayout>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:id="@+id/share_btn"
+            android:text="SHARE"/>
     </LinearLayout>
+</LinearLayout>

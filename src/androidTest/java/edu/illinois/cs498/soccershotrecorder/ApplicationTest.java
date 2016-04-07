@@ -1,4 +1,4 @@
-package edu.illinois.cs498.draganddroppractice;
+package edu.illinois.cs498.soccershotrecorder;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

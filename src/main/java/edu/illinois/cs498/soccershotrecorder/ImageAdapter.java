@@ -1,19 +1,12 @@
-package edu.illinois.cs498.draganddroppractice;
+package edu.illinois.cs498.soccershotrecorder;
 
-import android.app.Activity;
-import android.content.ClipData;
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +34,7 @@ public class ImageAdapter extends BaseAdapter {
         this.existing_shots = existing_shots;
     }
     public int getCount() {
-        return 209;
+        return 171;
     }
     public Object getItem(int position) {
         return null;
@@ -55,7 +48,7 @@ public class ImageAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         //get the item corresponding to your position
 
-        ImageView curr_grid = (ImageView)LayoutInflater.from(context).inflate(R.layout.grid, parent, false);
+        ImageView curr_grid = (ImageView)LayoutInflater.from(context).inflate(R.layout.field_grid_item, parent, false);
         curr_grid.setId(position);
         curr_grid.setOnDragListener(onDraglistener);
         if (!existing_shots.isEmpty()) {

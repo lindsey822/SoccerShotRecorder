@@ -1,13 +1,11 @@
-package edu.illinois.cs498.draganddroppractice;
+package edu.illinois.cs498.soccershotrecorder;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +13,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.List;
 
@@ -66,21 +63,23 @@ public class GameSummaryActivity extends Activity {
         Context context = getApplicationContext();
         bmap_first = GlobalHelper.readBitmapFile(context, bmap_first_filename);
         bmap_second = GlobalHelper.readBitmapFile(context, bmap_second_filename);
+        Log.d("Game Summary", bmap_first_filename);
+        Log.d("Game Summary", bmap_second_filename);
 
         ((TextView)findViewById(R.id.my_team_name)).setText(my_team_name);
         ((TextView)findViewById(R.id.opp_team_name)).setText(opp_team_name);
         ((TextView)findViewById(R.id.my_team_score)).setText(my_team_score);
         ((TextView)findViewById(R.id.opp_team_score)).setText(opp_team_score);
 
-        ((TextView)findViewById(R.id.goals0)).setText("Goal " + Integer.toString(counts.get(0).get(0)));
-        ((TextView)findViewById(R.id.misses0)).setText("Miss " + Integer.toString(counts.get(0).get(1)));
-        ((TextView)findViewById(R.id.penalty_kicks0)).setText("Penalty Kick " + Integer.toString(counts.get(0).get(2)));
+        ((TextView)findViewById(R.id.goals0)).setText("Goal " + Integer.toString(counts.get(0).get(2)));
+        ((TextView)findViewById(R.id.misses0)).setText("Miss " + Integer.toString(counts.get(0).get(0)));
+        ((TextView)findViewById(R.id.penalty_kicks0)).setText("Penalty Kick " + Integer.toString(counts.get(0).get(1)));
         ((TextView)findViewById(R.id.red_cards0)).setText("Red Card " + Integer.toString(counts.get(0).get(3)));
         ((TextView)findViewById(R.id.yellow_cards0)).setText("Yellow Card " + Integer.toString(counts.get(0).get(4)));
 
-        ((TextView)findViewById(R.id.goals1)).setText("Goal " + Integer.toString(counts.get(1).get(0)));
-        ((TextView)findViewById(R.id.misses1)).setText("Miss " + Integer.toString(counts.get(1).get(1)));
-        ((TextView)findViewById(R.id.penalty_kicks1)).setText("Penalty Kick " + Integer.toString(counts.get(1).get(2)));
+        ((TextView)findViewById(R.id.goals1)).setText("Goal " + Integer.toString(counts.get(1).get(2)));
+        ((TextView)findViewById(R.id.misses1)).setText("Miss " + Integer.toString(counts.get(1).get(0)));
+        ((TextView)findViewById(R.id.penalty_kicks1)).setText("Penalty Kick " + Integer.toString(counts.get(1).get(1)));
         ((TextView)findViewById(R.id.red_cards1)).setText("Red Card " + Integer.toString(counts.get(1).get(3)));
         ((TextView)findViewById(R.id.yellow_cards1)).setText("Yellow Card " + Integer.toString(counts.get(1).get(4)));
 
@@ -145,10 +144,13 @@ public class GameSummaryActivity extends Activity {
         Intent intent = new Intent(this, FieldSummaryActivity.class);
         switch (half_flag) {
             case 0:
+                Log.d("Game Summary", "go to first, filename="+bmap_first_filename);
                 intent.putExtra("image_filename", bmap_first_filename);
-
+                break;
             case 1:
+                Log.d("Game Summary", "go to second, filename="+bmap_second_filename);
                 intent.putExtra("image_filename", bmap_second_filename);
+                break;
         }
         startActivity(intent);
     }

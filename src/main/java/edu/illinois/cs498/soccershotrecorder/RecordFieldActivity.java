@@ -1,13 +1,11 @@
-package edu.illinois.cs498.draganddroppractice;
+package edu.illinois.cs498.soccershotrecorder;
 
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
@@ -21,8 +19,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -71,32 +67,41 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.field_recording_view);
 
-        //retrieve known information about this game
-        /*
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        my_team_name = bundle.getString("my_team_name");
-        opp_team_name = bundle.getString("opp_team_name");
-        player_name = bundle.getString("player_name");
-*/
-        //temporarily give initialized values to above three
-        my_team_name = "my team";
-        opp_team_name = "opp team";
-        player_name = "Eric";
+        //restore if has been destroyed/stopped
+        if (savedInstanceState != null) {
+            shots = (HashMap<Integer, HashMap<Integer, Integer>>) savedInstanceState.getSerializable("shots");
+            shot_type_counter = (HashMap<Integer, HashMap<Integer, Integer>>) savedInstanceState.getSerializable("counts");
+            half_flag = savedInstanceState.getInt("half_flag");
+            my_team_name = savedInstanceState.getString("my_team_name");
+            opp_team_name = savedInstanceState.getString("opp_team_name");
+            player_name = savedInstanceState.getString("player_name");
+            bmap_first_filename = savedInstanceState.getString("bmap_first_filename");
+            bmap_second_filename = savedInstanceState.getString("bmap_second_filename");
+            my_team_score = savedInstanceState.getInt("my_team_score");
+            opp_team_score = savedInstanceState.getInt("opp_team_score");
+        } else {
+            //retrieve known information about this game
 
-        /* Initialize maps */
-        shots = new HashMap<>();
-        shots.put(0, new HashMap<Integer, Integer>());
-        Log.d("RecordFieldActivity", "shots for first half created");
-        shots.put(1, new HashMap<Integer, Integer>());//shots for second half
-        Log.d("RecordFieldActivity", "shots for second half created");
+            Intent intent = getIntent();
+            Bundle bundle = intent.getExtras();
+            my_team_name = bundle.getString("my_team_name");
+            opp_team_name = bundle.getString("opp_team_name");
+            player_name = bundle.getString("player_name");
 
-        shot_type_counter = new HashMap<>();
-        shot_type_counter.put(0, new HashMap<Integer, Integer>());
-        shot_type_counter.put(1, new HashMap<Integer, Integer>());
-        for(int i=0;i<num_types;i++) {
-            shot_type_counter.get(0).put(i, 0);
-            shot_type_counter.get(1).put(i, 0);
+            /* Initialize maps */
+            shots = new HashMap<>();
+            shots.put(0, new HashMap<Integer, Integer>());
+            Log.d("RecordFieldActivity", "shots for first half created");
+            shots.put(1, new HashMap<Integer, Integer>());//shots for second half
+            Log.d("RecordFieldActivity", "shots for second half created");
+
+            shot_type_counter = new HashMap<>();
+            shot_type_counter.put(0, new HashMap<Integer, Integer>());
+            shot_type_counter.put(1, new HashMap<Integer, Integer>());
+            for(int i=0;i<num_types;i++) {
+                shot_type_counter.get(0).put(i, 0);
+                shot_type_counter.get(1).put(i, 0);
+            }
         }
 
         /* Set texts of information displayed on title bar */
@@ -153,7 +158,7 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
                 if (is_initial_recording) {
                     is_initial_recording = Boolean.FALSE;
                 } else {
-                    onGoToOtherdHalf();
+                    onGoToOtherHalf();
                 }
             }
 
@@ -187,6 +192,19 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
                     decrementCountForType(color_index);
                 }
                 incrementCountForType(next_color_index);
+                //if it's a goal, increment my team's score
+                if (next_color_index == 2) {
+                    my_team_score++;
+                    ((TextView) findViewById(R.id.my_team_score)).setText(Integer.toString(my_team_score));
+                    findViewById(R.id.my_team_score).requestLayout();
+                }
+                //if it's a yellow card, the user is coming from a previous goal
+                // decrement my team's score
+                if (next_color_index == 3) {
+                    my_team_score--;
+                    ((TextView) findViewById(R.id.my_team_score)).setText(Integer.toString(my_team_score));
+                    findViewById(R.id.my_team_score).requestLayout();
+                }
 
                 Log.d("onClick", "shot added; color=" + dot_descriptions.get(next_color_index)
                     + " position=" + position
@@ -219,34 +237,23 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
         });
 
     }
-/*
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("shots", shots);
         outState.putSerializable("counts", shot_type_counter);
         outState.putInt("half_flag", half_flag);
-        //the following could be null
-        outState.putParcelable("field_bitmap_first", bmap_first);
-        outState.putParcelable("field_thumbnail_first", thumbnail_first);
-        //save drawables of image views of gridview as well
-        int count = gridview.getCount();
-        for (int i = 0; i < count; i++) {
-            ImageView v = (ImageView) gridview.getChildAt(i);
-            if (v != null) {
-                if (v.getDrawable() != null) v.getDrawable().setCallback(null);
-            }
-        }
+        outState.putString("my_team_name", my_team_name);
+        outState.putString("opp_team_name", opp_team_name);
+        outState.putString("player_name", player_name);
+        outState.putString("bmap_first_filename", bmap_first_filename);
+        outState.putString("bmap_second_filename", bmap_second_filename);
+        outState.putInt("my_team_score", my_team_score);
+        outState.putInt("opp_team_score", opp_team_score);
     }
 
-    private void restore(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            places = (ArrayList<HashMap<String,String>>) savedInstanceState.getSerializable("places");
-        }
-    }
-*/
-
-    public void onGoToOtherdHalf() {
+    public void onGoToOtherHalf() {
         //capture a bitmap and thumbnail of current field view for current(first) half
         captureBitmap(this.half_flag);
         //save shots map and screenshot to file
@@ -257,8 +264,7 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
         this.half_flag = 1 - this.half_flag;
 
         //redraw all shots for the other half
-        imageAdapter.setExistingShots(shots.get(half_flag));
-        imageAdapter.notifyDataSetChanged();
+        redrawGridView();
     }
 
     //when recording ends, trigger a pop-up dialog to let the user enter final scores
@@ -303,15 +309,19 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
                 return true;
 
             case DragEvent.ACTION_DRAG_ENTERED:
-                if (isTrashCan) v.setBackgroundColor(Color.RED);
-                else v.setColorFilter(Color.argb(50, 0, 0, 0));
-                v.invalidate();
+                if (isTrashCan) {
+                    v.setBackgroundColor(Color.RED);
+                    v.invalidate();
+                }
+                //else v.setColorFilter(Color.argb(50, 0, 0, 0));
                 return true;
 
             case DragEvent.ACTION_DRAG_EXITED:
-                if (isTrashCan) v.setBackgroundColor(Color.TRANSPARENT);
-                v.setColorFilter(Color.argb(0, 0, 0, 0));
-                v.invalidate();
+                if (isTrashCan) {
+                    v.setBackgroundColor(Color.TRANSPARENT);
+                    v.invalidate();
+                }
+                //v.setColorFilter(Color.argb(0, 0, 0, 0));
                 return true;
 
             case DragEvent.ACTION_DROP:
@@ -346,6 +356,11 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
 
     //helper functions
 
+    public void redrawGridView() {
+        imageAdapter.setExistingShots(shots.get(half_flag));
+        imageAdapter.notifyDataSetChanged();
+    }
+
     public void saveToFile(int half_flag) {
         Calendar cal = Calendar.getInstance();
         String date = Integer.toString(cal.get(Calendar.YEAR))
@@ -362,7 +377,7 @@ public class RecordFieldActivity extends Activity implements View.OnDragListener
             oos.writeObject(shots.get(half_flag));
             oos.close();
 
-            String imageFilename = "screenshot_half_" + half_flag + date + ".png";
+            String imageFilename = "screenshot_" + half_flag + "_" + date + ".png";
             fos2 = context.openFileOutput(imageFilename, Context.MODE_PRIVATE);
             Bitmap image = half_flag == 0? bmap_first : bmap_second;
             image.compress(Bitmap.CompressFormat.PNG, 100, fos2);

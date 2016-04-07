@@ -1,16 +1,14 @@
-package edu.illinois.cs498.draganddroppractice;
+package edu.illinois.cs498.soccershotrecorder;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
-
-import java.io.FileInputStream;
 
 /**
  * Author: Lindsey Liu
@@ -24,6 +22,8 @@ public class FieldSummaryActivity extends Activity {
 
         Intent intent = getIntent();
         String filename = intent.getStringExtra("image_filename");
+        Log.d("Field Summary", filename);
+
         if (!filename.isEmpty()) {
             Context context = getApplicationContext();
             Bitmap bmap = GlobalHelper.readBitmapFile(context, filename);
